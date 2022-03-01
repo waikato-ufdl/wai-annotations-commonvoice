@@ -1,6 +1,10 @@
 # wai-annotations-commonvoice
 wai.annotations module for managing common voice audio annotations.
 
+The manual is available here:
+
+https://ufdl.cms.waikato.ac.nz/wai-annotations-manual/
+
 ## Plugins
 ### FROM-COMMON-VOICE-SP
 Reads speech transcriptions in the Mozilla Common-Voice TSV-format
