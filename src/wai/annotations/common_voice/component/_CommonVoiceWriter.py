@@ -51,7 +51,7 @@ class CommonVoiceWriter(
             "down_votes": 0,
             "age": None,
             "gender": None,
-            "accent": None,
+            "accents": None,
             "locale": "",
             "segment": ""
         }

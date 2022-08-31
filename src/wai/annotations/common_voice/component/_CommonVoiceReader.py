@@ -7,7 +7,7 @@ from wai.annotations.core.component.util import AnnotationFileProcessor
 from wai.annotations.core.stream import ThenFunction
 from wai.annotations.domain.audio import Audio
 from wai.annotations.domain.audio.speech import SpeechInstance, Transcription
-from ..util import CommonVoiceDialect, EXPECTED_HEADER
+from ..util import CommonVoiceDialect, EXPECTED_HEADER, EXPECTED_HEADER_OLD
 
 
 class CommonVoiceReader(AnnotationFileProcessor[SpeechInstance]):
@@ -28,15 +28,21 @@ class CommonVoiceReader(AnnotationFileProcessor[SpeechInstance]):
             # Consume the header
             header = file.readline()
 
-            # Make sure the header is what we expect
-            if header != EXPECTED_HEADER + '\n':
-                raise ValueError(f"Expected header: {EXPECTED_HEADER}\n"
+            # is the header as expected?
+            if header == EXPECTED_HEADER + '\n':
+                reader = csv.DictReader(file,
+                                        EXPECTED_HEADER.split('\t'),
+                                        dialect=CommonVoiceDialect)
+            elif header == EXPECTED_HEADER_OLD + '\n':
+                reader = csv.DictReader(file,
+                                        EXPECTED_HEADER_OLD.split('\t'),
+                                        dialect=CommonVoiceDialect)
+            else:
+                raise ValueError(f"Expected header: {EXPECTED_HEADER} or {EXPECTED_HEADER_OLD}\n"
                                  f"Seen header: {header}")
 
             # Yield rows from the file
-            for row in csv.DictReader(file,
-                                      EXPECTED_HEADER.split('\t'),
-                                      dialect=CommonVoiceDialect):
+            for row in reader:
                 then(
                     SpeechInstance(
                         Audio.from_file(os.path.join(os.path.dirname(filename), self.rel_path, row["path"])),
