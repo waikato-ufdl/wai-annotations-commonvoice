@@ -33,7 +33,7 @@ setup(
         "wai",
         "wai.annotations"
     ],
-    version="1.0.1",
+    version="1.0.2",
     author='Corey Sterling',
     author_email='coreytsterling@gmail.com',
     install_requires=[

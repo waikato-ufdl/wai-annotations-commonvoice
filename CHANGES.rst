@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.2 (????-??-??)
+1.0.2 (2022-09-05)
 ------------------
 
 - the expected header now uses *accents* rather than *accent* (but the reader accepts both)
